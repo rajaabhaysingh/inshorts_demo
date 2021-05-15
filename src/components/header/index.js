@@ -5,12 +5,9 @@ import clsx from "clsx";
 // styling
 import {
   Button,
-  Divider,
   Hidden,
   IconButton,
   makeStyles,
-  Menu,
-  MenuItem,
   Modal,
 } from "@material-ui/core";
 import useGlobalStyles from "../../styles/globalStyles";
@@ -24,21 +21,12 @@ import logoLight from "../../assets/img/logo_light.png";
 import logoDark from "../../assets/img/logo_dark.png";
 
 // colors
-import { paperLightLight, paperLightDark } from "../../styles/colors";
 
 // icons
 import {
-  AccountCircle,
-  AccountCircleTwoTone,
-  BallotTwoTone,
   Brightness4TwoTone,
   BrightnessHighTwoTone,
   CloseTwoTone,
-  DescriptionTwoTone,
-  EmailTwoTone,
-  LanguageTwoTone,
-  MoreVert,
-  NotificationsActiveTwoTone,
   SearchTwoTone,
 } from "@material-ui/icons";
 
@@ -167,6 +155,16 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 99999,
     marginTop: "60px",
   },
+  link: {
+    alignSelf: "flex-end",
+    width: "100%",
+    color: theme.palette.primary.main,
+    padding: "8px",
+    textDecoration: "none",
+    borderRadius: "4px",
+    textAlign: "center",
+    fontSize: "0.8rem",
+  },
 }));
 
 const Header = () => {
@@ -181,13 +179,11 @@ const Header = () => {
   const [searchText, setSearchText] = useState("");
   const [isModelOpen, setIsModelOpen] = useState(firstTime);
   const [moreOptAnchorEl, setMoreOptAnchorEl] = useState(null);
-  const [moreOptPcAnchorEl, setMoreOptPcAnchorEl] = useState(null);
   const [mobSearchVisible, setMobSearchVisible] = useState(
     helper.marginTop ? true : false
   );
 
   const moreOptionOpen = Boolean(moreOptAnchorEl);
-  const moreOptionPcOpen = Boolean(moreOptPcAnchorEl);
 
   // headerlinks
   const headerlinks = [
@@ -208,27 +204,6 @@ const Header = () => {
     },
   ];
 
-  // --- topbar menu operations ---
-  const handleMoreOptionsClick = (event) => {
-    if (mobSearchVisible) {
-      setMobSearchVisible(false);
-      // dispatch(changeMargin(false));
-    }
-    setMoreOptAnchorEl(event.currentTarget);
-  };
-
-  const handlePcMoreOptionsClick = (event) => {
-    setMoreOptPcAnchorEl(event.currentTarget);
-  };
-
-  const handleMoreOptClose = () => {
-    setMoreOptAnchorEl(null);
-  };
-
-  const handleMoreOptPcClose = () => {
-    setMoreOptPcAnchorEl(null);
-  };
-
   // handleThemeToggle
   const handleThemeToggle = () => {
     if (helper.themeName === "light") {
@@ -236,7 +211,6 @@ const Header = () => {
     } else {
       dispatch(themeAction("light"));
     }
-    handleMoreOptClose();
   };
 
   // handleSearchSubmit
@@ -313,67 +287,18 @@ const Header = () => {
             <IconButton color="inherit" onClick={handleMobSearchToggle}>
               {mobSearchVisible ? <CloseTwoTone /> : <SearchTwoTone />}
             </IconButton>
-            <IconButton color="inherit" onClick={handleMoreOptionsClick}>
-              <MoreVert />
+            <IconButton color="inherit" onClick={handleThemeToggle}>
+              {helper.themeName === "light" ? (
+                <Brightness4TwoTone />
+              ) : (
+                <BrightnessHighTwoTone />
+              )}
             </IconButton>
-            <Menu
-              anchorEl={moreOptAnchorEl}
-              keepMounted
-              open={moreOptionOpen}
-              onClose={handleMoreOptClose}
-              PaperProps={{
-                style: {
-                  width: "20ch",
-                  marginTop: "60px",
-                  boxSizing: "border-box",
-                  borderRadius: "4px",
-                  border: `1px solid rgba(0,0,0,0.25)`,
-                  boxShadow: "0 0 8px rgba(0,0,0,0.15)",
-                  backgroundColor:
-                    helper.themeName === "light"
-                      ? paperLightLight
-                      : paperLightDark,
-                },
-              }}
-            >
-              <MenuItem className={globalCls.menuItemPri}>
-                <div className="fc fsm">
-                  <NotificationsActiveTwoTone color="primary" />
-                  <div className="fs mar_l-12">Notifications</div>
-                </div>
-              </MenuItem>
-              <Divider className={globalCls.marTB_8} />
-              <MenuItem className={globalCls.menuItemPri}>
-                <div className="fc fsm">
-                  <LanguageTwoTone color="primary" />
-                  <div className="fs mar_l-12">Language</div>
-                </div>
-              </MenuItem>
-              <MenuItem
-                className={globalCls.menuItemPri}
-                onClick={handleThemeToggle}
-              >
-                {helper.themeName === "light" ? (
-                  <div className="fc fsm">
-                    <Brightness4TwoTone color="primary" />
-                    <div className="fs mar_l-12">Dark Mode</div>
-                  </div>
-                ) : (
-                  <div className="fc fsm">
-                    <BrightnessHighTwoTone color="primary" />
-                    <div className="fs mar_l-12">Light mode</div>
-                  </div>
-                )}
-              </MenuItem>
-            </Menu>
           </Hidden>
           {/* for pc */}
           <Hidden smDown implementation="css">
             <div className="fc">
               {renderSearchBar()}
-              <IconButton color="primary">
-                <LanguageTwoTone />
-              </IconButton>
               <IconButton color="primary" onClick={handleThemeToggle}>
                 {helper.themeName === "light" ? (
                   <Brightness4TwoTone />
@@ -381,72 +306,6 @@ const Header = () => {
                   <BrightnessHighTwoTone />
                 )}
               </IconButton>
-              <IconButton color="primary" onClick={handlePcMoreOptionsClick}>
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                anchorEl={moreOptPcAnchorEl}
-                keepMounted
-                open={moreOptionPcOpen}
-                onClose={handleMoreOptPcClose}
-                PaperProps={{
-                  style: {
-                    width: "20ch",
-                    marginTop: "92px",
-                    boxSizing: "border-box",
-                    borderRadius: "4px",
-                    border: `1px solid rgba(0,0,0,0.25)`,
-                    boxShadow: "0 0 8px rgba(0,0,0,0.15)",
-                    backgroundColor:
-                      helper.themeName === "light"
-                        ? paperLightLight
-                        : paperLightDark,
-                  },
-                }}
-              >
-                <MenuItem className={globalCls.menuItemPri}>
-                  <div className="fc fsm">
-                    <NotificationsActiveTwoTone color="primary" />
-                    <div className="fs mar_l-12">Notifications</div>
-                  </div>
-                </MenuItem>
-                <MenuItem
-                  className={globalCls.menuItemPri}
-                  onClick={() => history.push("/account/messages")}
-                >
-                  <div className="fc fsm">
-                    <EmailTwoTone color="primary" />
-                    <div className="fs mar_l-12">Messages</div>
-                  </div>
-                </MenuItem>
-                <MenuItem
-                  className={globalCls.menuItemPri}
-                  onClick={() => history.push("/account")}
-                >
-                  <div className="fc fsm">
-                    <AccountCircleTwoTone color="primary" />
-                    <div className="fs mar_l-12">Account</div>
-                  </div>
-                </MenuItem>
-                <MenuItem
-                  className={globalCls.menuItemPri}
-                  onClick={() => history.push("/account/my-applications")}
-                >
-                  <div className="fc fsm">
-                    <DescriptionTwoTone color="primary" />
-                    <div className="fs mar_l-12">My Applications</div>
-                  </div>
-                </MenuItem>
-                <MenuItem
-                  className={globalCls.menuItemPri}
-                  onClick={() => history.push("/account/my-postings")}
-                >
-                  <div className="fc fsm">
-                    <BallotTwoTone color="primary" />
-                    <div className="fs mar_l-12">My Postings</div>
-                  </div>
-                </MenuItem>
-              </Menu>
             </div>
           </Hidden>
         </div>
@@ -465,14 +324,18 @@ const Header = () => {
             </NavLink>
           ))}
         </div>
-        <div className={clsx(cls.locationText, "sb_hid")}>Some text here</div>
+        <div className={clsx(cls.locationText, "sb_hid")}>
+          <a className={cls.link} href="https://www.twitter.com/raja_ras">
+            Connect on Twitter
+          </a>
+        </div>
       </div>
       {/* mob visible - search bar */}
       <Hidden mdUp implementation="css">
         {mobSearchVisible ? renderSearchBar() : null}
       </Hidden>
       <Modal
-        open={firstTime}
+        open={isModelOpen}
         onClose={() => {
           firstTime = false;
           setIsModelOpen(false);

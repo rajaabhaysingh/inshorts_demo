@@ -12,9 +12,10 @@ import { makeStyles } from "@material-ui/core";
 import useGlobalStyles from "../../styles/globalStyles";
 
 // assets
-import insight_banner from "../../assets/img/insights_banner.jpg";
-import polls_banner from "../../assets/img/polls_banner.jpg";
-import covid_banner from "../../assets/img/covid_banner.png";
+import banner1 from "../../assets/img/banner1.jpg";
+import banner2 from "../../assets/img/banner2.jpg";
+import banner3 from "../../assets/img/banner3.jpg";
+import banner4 from "../../assets/img/banner4.jpg";
 import insights1 from "../../assets/img/insights1.jpg";
 import insights2 from "../../assets/img/insights2.jpg";
 import insights3 from "../../assets/img/insights3.jpg";
@@ -50,29 +51,20 @@ const Home = ({ helper }) => {
 
   const bannerArray = [
     {
-      banner: covid_banner,
+      banner: banner2,
+      actionUrl: "/all",
+    },
+    {
+      banner: banner1,
       actionUrl: "/insights",
     },
     {
-      banner: insight_banner,
-      actionUrl: "/insights",
+      banner: banner3,
+      actionUrl: "/",
     },
     {
-      banner: polls_banner,
-      actionUrl: "/insights",
-    },
-    {
-      banner: insight_banner,
-      actionUrl: "/insights",
-    },
-  ];
-
-  const catList = [
-    {
-      _id: "s223",
-      slug: "science",
-      categoryName: "Science",
-      categoryImage: "",
+      banner: banner4,
+      actionUrl: "/",
     },
   ];
 

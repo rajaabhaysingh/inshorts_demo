@@ -45,6 +45,20 @@ const useStyles = makeStyles((theme) => ({
   drawerHeader: {
     height: "60px",
     boxShadow: theme.shadows[3],
+    display: "flex",
+    alignItems: "center",
+    padding: "16px",
+    boxSizing: "border-box",
+  },
+  link: {
+    alignSelf: "flex-end",
+    width: "100%",
+    color: theme.palette.primary.main,
+    padding: "8px",
+    background: theme.palette.divider,
+    textDecoration: "none",
+    borderRadius: "4px",
+    textAlign: "center",
   },
 }));
 
@@ -64,8 +78,13 @@ const SideDrawer = ({ isMenuOpen, setMenuOpen }) => {
     },
     {
       title: "My Feeds",
-      link: "/my-feeds",
+      link: "/all",
       icon: <i className="fas fa-th mar_r-4"></i>,
+    },
+    {
+      title: "Insights",
+      link: "/insights",
+      icon: <i className="fas fa-info-circle mar_r-4"></i>,
     },
   ];
 
@@ -143,7 +162,11 @@ const SideDrawer = ({ isMenuOpen, setMenuOpen }) => {
             : cls.sideDrawerBase
         }
       >
-        <div className={cls.drawerHeader}></div>
+        <div className={cls.drawerHeader}>
+          <div className={globalCls.txtSmPri}>
+            <strong>Inshorts </strong> clone
+          </div>
+        </div>
         <ul className="fcol pad-0">
           {startLinks.map((link, i) => (
             <NavLink
@@ -158,6 +181,11 @@ const SideDrawer = ({ isMenuOpen, setMenuOpen }) => {
             </NavLink>
           ))}
         </ul>
+        <div className={cls.link} style={{ alignItems: "flex-end" }}>
+          <a className={cls.link} href="https://www.twitter.com/raja_ras">
+            Connect on Twitter
+          </a>
+        </div>
       </div>
       <div
         ref={backdropRef}

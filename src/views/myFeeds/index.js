@@ -102,6 +102,24 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: theme.shadows[8],
     },
   },
+  arrowBtnMob: {
+    outline: "none",
+    border: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    fontSize: "3rem",
+    textShadow: "0 4px 8px rgba(0,0,0,0.5)",
+    position: "absolute",
+    top: "75vh",
+    color: theme.palette.text.tertiary,
+    background: "#00000000",
+    cursor: "pointer",
+    "&:hover": {
+      color: theme.palette.primary.main,
+    },
+  },
 }));
 
 const MyFeeds = ({ helper }) => {
@@ -191,7 +209,7 @@ const MyFeeds = ({ helper }) => {
       <div style={{ overflow: "hidden" }} className={globalCls.bodyRoot}>
         {inshorts.inshortsData?.data?.length > 0 ? (
           <div
-            className={clsx(globalCls.pcMarT8, "fcol")}
+            className={clsx(globalCls.pcMarT8, "fcol rel")}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -391,6 +409,11 @@ const MyFeeds = ({ helper }) => {
             <Hidden smDown>
               <button className={cls.arrowBtn} onClick={increseActiveIndex}>
                 <i className="fas fa-chevron-down mar_t-4"></i>
+              </button>
+            </Hidden>
+            <Hidden mdUp>
+              <button className={cls.arrowBtnMob} onClick={increseActiveIndex}>
+                <i className="fas fa-chevron-up mar_t-4"></i>
               </button>
             </Hidden>
           </div>
