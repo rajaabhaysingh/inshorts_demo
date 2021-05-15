@@ -35,34 +35,30 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       minWidth: "100%",
       margin: "0 0 8px 0",
-      maxHeight: "calc(100% - 100px)",
-      height: "calc(100% - 100px)",
+      maxHeight: "calc(80vh - 60px)",
+      height: "calc(80vh - 60px)",
     },
   },
   imgWrapper: {
     width: "300px",
     minWidth: "300px",
-    // height: "200px",
-    paddingTop: "15%",
-    position: "relative",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       minWidth: "100%",
-      paddingTop: "100%",
+      height: "100%",
     },
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   inshortImg: {
     width: "100%",
-    height: "100%",
     boxSizing: "border-box",
     objectFit: "cover",
     objectPosition: "center",
-    position: "absolute",
-    top: "0",
-    left: "0",
     borderRadius: "8px 0 0 8px",
     [theme.breakpoints.down("sm")]: {
       borderRadius: "8px 8px 0 0",
+      height: "100%",
     },
   },
   linkWrapper: {
@@ -230,13 +226,12 @@ const MyFeeds = ({ helper }) => {
               <div
                 className={clsx(globalCls.pclr_mobtb, cls.inshortCardWrapper)}
               >
-                <div className={cls.imgWrapper}>
-                  <img
-                    className={cls.inshortImg}
-                    src={inshorts.inshortsData.data[activeIndex].images}
-                    alt=""
-                  />
-                </div>
+                <div
+                  style={{
+                    backgroundImage: `url(${inshorts.inshortsData.data[activeIndex].images})`,
+                  }}
+                  className={cls.imgWrapper}
+                ></div>
                 <div
                   className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
                 >
@@ -275,13 +270,12 @@ const MyFeeds = ({ helper }) => {
                   "sb_hid"
                 )}
               >
-                <div className={cls.imgWrapper}>
-                  <img
-                    className={cls.inshortImg}
-                    src={inshorts.inshortsData.data[activeIndex].images}
-                    alt=""
-                  />
-                </div>
+                <div
+                  style={{
+                    backgroundImage: `url(${inshorts.inshortsData.data[activeIndex].images})`,
+                  }}
+                  className={cls.imgWrapper}
+                ></div>
                 <div
                   className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
                 >
@@ -322,13 +316,14 @@ const MyFeeds = ({ helper }) => {
               <div
                 className={clsx(globalCls.pclr_mobtb, cls.inshortCardWrapper)}
               >
-                <div className={cls.imgWrapper}>
-                  <img
-                    className={cls.inshortImg}
-                    src={inshorts.inshortsData.data[activeIndex + 1].images}
-                    alt=""
-                  />
-                </div>
+                <div
+                  style={{
+                    backgroundImage: `url(${
+                      inshorts.inshortsData.data[activeIndex + 1].images
+                    })`,
+                  }}
+                  className={cls.imgWrapper}
+                ></div>
                 <div
                   className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
                 >
@@ -367,13 +362,14 @@ const MyFeeds = ({ helper }) => {
                   "sb_hid"
                 )}
               >
-                <div className={cls.imgWrapper}>
-                  <img
-                    className={cls.inshortImg}
-                    src={inshorts.inshortsData.data[activeIndex + 1].images}
-                    alt=""
-                  />
-                </div>
+                <div
+                  style={{
+                    backgroundImage: `url(${
+                      inshorts.inshortsData.data[activeIndex + 1].images
+                    })`,
+                  }}
+                  className={cls.imgWrapper}
+                ></div>
                 <div
                   className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
                 >

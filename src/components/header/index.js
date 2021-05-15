@@ -34,9 +34,6 @@ import {
 import { themeAction, changeMargin } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
-// variables for popup
-let firstTime = true;
-
 const useStyles = makeStyles((theme) => ({
   searchVisible: {
     display: "flex",
@@ -177,7 +174,9 @@ const Header = () => {
   // local state management
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [isModelOpen, setIsModelOpen] = useState(firstTime);
+  const [isModelOpen, setIsModelOpen] = useState(
+    localStorage.getItem("firstTime") === "false" ? false : true
+  );
   const [moreOptAnchorEl, setMoreOptAnchorEl] = useState(null);
   const [mobSearchVisible, setMobSearchVisible] = useState(
     helper.marginTop ? true : false
@@ -337,8 +336,8 @@ const Header = () => {
       <Modal
         open={isModelOpen}
         onClose={() => {
-          firstTime = false;
           setIsModelOpen(false);
+          localStorage.setItem("firstTime", "false");
         }}
         className="fccc"
       >
@@ -370,8 +369,8 @@ const Header = () => {
               color="primary"
               type="button"
               onClick={() => {
-                firstTime = false;
                 setIsModelOpen(false);
+                localStorage.setItem("firstTime", "false");
               }}
             >
               Okay, Let me explore!
