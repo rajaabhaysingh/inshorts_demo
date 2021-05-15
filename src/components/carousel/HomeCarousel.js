@@ -34,9 +34,9 @@ const HomeCarousel = ({ bannerArray }) => {
 
   const [sliderRef, slider] = useKeenSlider({
     slidesPerView: 1,
-    spacing: 10,
+    spacing: 16,
     loop: true,
-    duration: 1000,
+    duration: 2000,
     dragStart: () => {
       setPause(true);
     },

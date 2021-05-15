@@ -18,15 +18,16 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: "16px",
     background: theme.palette.background.bg,
-    borderRadius: "50px",
+    borderRadius: "8px",
     textDecoration: "none",
     color: theme.palette.text.primary,
-    height: "100px",
-    width: "100px",
+    // height: "100px",
+    // width: "100px",
     boxSizing: "border-box",
   },
   catImg: {
-    height: "32px",
+    height: "80px",
+    width: "80px",
     boxSizing: "border-box",
     objectFit: "cover",
     objectPosition: "center",
@@ -44,11 +45,7 @@ const CategoryCard = ({ category }) => {
         to={`/jobs?category=${category.slug}&catId=${category._id}`}
         className={clsx("fccc", cls.root)}
       >
-        <img
-          className={cls.catImg}
-          src={process.env.REACT_APP_BASE_URL + category.categoryImage}
-          alt=""
-        />
+        <img className={cls.catImg} src={category.categoryImage} alt="" />
         <div className={clsx("mar_t-8", "ellipsis", "fwb", globalCls.txtSmSec)}>
           {category.categoryName || "Unavailable"}
         </div>

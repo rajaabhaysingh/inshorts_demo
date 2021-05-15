@@ -1,11 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
+
+// for reduc debugging
+window.store = store;
 
 ReactDOM.render(
   <BrowserRouter>
@@ -14,9 +17,8 @@ ReactDOM.render(
         <App />
       </React.StrictMode>
     </Provider>
-  </BrowserRouter>
-  ,
-  document.getElementById('root')
+  </BrowserRouter>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

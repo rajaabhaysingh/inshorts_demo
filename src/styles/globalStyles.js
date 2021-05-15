@@ -135,16 +135,16 @@ const useGlobalStyles = makeStyles((theme) => ({
   },
   imgContainer: {
     width: "100%",
-    paddingTop: "50%",
+    paddingTop: "25%",
     position: "relative",
     [theme.breakpoints.between("sm", "md")]: {
-      paddingTop: "25%",
+      paddingTop: "12.5%",
     },
     [theme.breakpoints.between("md", "xl")]: {
-      paddingTop: "16.66%",
+      paddingTop: "8.33%",
     },
     [theme.breakpoints.up("xl")]: {
-      paddingTop: "12.5%",
+      paddingTop: "8.33%",
     },
   },
   carouselBanner: {
@@ -156,13 +156,14 @@ const useGlobalStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "0px",
     left: "0px",
+    borderRadius: "0",
     [theme.breakpoints.up("xs")]: {
       borderRadius: "8px",
     },
   },
   secContainer: {
-    padding: "16px 0",
-    marginTop: "16px",
+    padding: "8px 0",
+    marginTop: "8px",
     [theme.breakpoints.down("sm")]: {
       padding: "8px 0",
       marginTop: "8px",
@@ -284,12 +285,15 @@ const useGlobalStyles = makeStyles((theme) => ({
   },
   hovActive: {
     background: theme.palette.divider,
-    borderRadius: "50px",
+    borderRadius: "8px",
     padding: "1px",
     marginRight: "16px",
     "&:hover": {
       background: `linear-gradient(${theme.palette.primary.main}, rgba(0,0,0,0))`,
       //   boxShadow: theme.shadows[16],
+    },
+    [theme.breakpoints.down("sm")]: {
+      marginRight: "8px",
     },
   },
   pad_lr_8_16: {

@@ -22,11 +22,17 @@ const CategorySlider = ({ catList }) => {
   const globalCls = useGlobalStyles();
 
   return (
-    <div className={clsx("of_scr", "sb_hid", globalCls.pad_lr_8_16)}>
-      <div className={clsx("f")}>
+    <div className={clsx("fcol", globalCls.pad_lr_8_16)}>
+      <div className={clsx("txtC fwb", globalCls.txtLgSec)}>
+        News categories
+      </div>
+      <div className={clsx("txtC mar_t-", globalCls.txtSmSec)}>
+        Select a category to read inshorts.
+      </div>
+      <div className={clsx("f mar_t-16 of_scr sb_hid")}>
         {catList?.length > 0 ? (
-          catList.map((category) => (
-            <CategoryCard category={category} key={category._id} />
+          catList.map((category, i) => (
+            <CategoryCard category={category} key={i} />
           ))
         ) : (
           <div className={clsx(globalCls.pad_lr_8_16, "f1")}>
