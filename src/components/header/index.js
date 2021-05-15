@@ -217,7 +217,7 @@ const Header = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
 
-    history.push(`/jobs?q=${searchText}`);
+    history.push(`/all`);
   };
 
   // handleMobSearchToggle
