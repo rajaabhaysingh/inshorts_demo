@@ -4,6 +4,8 @@ import React from "react";
 import Header from "../../components/header";
 import HomeCarousel from "../../components/carousel/HomeCarousel";
 import CategorySlider from "../../components/sliders/CategorySlider";
+import HomeInsights from "../../components/insights/HomeInsights";
+import HomeInshorts from "../../components/inshorts/HomeInshorts";
 
 // styling
 import { makeStyles } from "@material-ui/core";
@@ -20,11 +22,10 @@ import insights4 from "../../assets/img/insights4.jpg";
 import insights5 from "../../assets/img/insights5.jpg";
 import insights6 from "../../assets/img/insights6.jpg";
 import insights7 from "../../assets/img/insights7.jpg";
-import HomeInsights from "../../components/insights/HomeInsights";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategory } from "../../redux/actions";
+import { getAllCategory, getInshorts } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,13 +37,15 @@ const Home = ({ helper }) => {
   const cls = useStyles();
   const globalCls = useGlobalStyles();
   const categories = useSelector((state) => state.categories);
+  const inshorts = useSelector((state) => state.inshorts);
   const dispatch = useDispatch();
 
-  console.log("Loggging categories...", categories);
+  console.log("Loggging inshorts...", inshorts);
 
   // loadin categories on initial render
   React.useEffect(() => {
     dispatch(getAllCategory());
+    dispatch(getInshorts());
   }, []);
 
   const bannerArray = [
@@ -93,6 +96,9 @@ const Home = ({ helper }) => {
           </div>
           <div className={globalCls.secContainer}>
             <CategorySlider catList={categories?.fetchData} />
+          </div>
+          <div className={globalCls.secContainer}>
+            <HomeInshorts inshortsArray={inshorts?.inshortsData?.data} />
           </div>
           <div className={globalCls.secContainer}>
             <HomeInsights insightsArray={insightsArray} />

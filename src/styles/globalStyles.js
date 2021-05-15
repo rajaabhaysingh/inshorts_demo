@@ -146,6 +146,7 @@ const useGlobalStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("xl")]: {
       paddingTop: "8.33%",
     },
+    boxShadow: theme.shadows[4],
   },
   carouselBanner: {
     width: "100%",
@@ -156,9 +157,9 @@ const useGlobalStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "0px",
     left: "0px",
-    borderRadius: "0",
-    [theme.breakpoints.up("xs")]: {
-      borderRadius: "8px",
+    borderRadius: "8px",
+    [theme.breakpoints.down("sm")]: {
+      borderRadius: "0",
     },
   },
   secContainer: {
@@ -335,10 +336,6 @@ const useGlobalStyles = makeStyles((theme) => ({
   },
   txtLgPri: {
     fontSize: "1.2rem",
-    color: theme.palette.text.primary,
-  },
-  txtMdPri: {
-    fontSize: "0.9rem",
     color: theme.palette.text.primary,
   },
   txtSmSec: {

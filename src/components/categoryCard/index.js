@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 // components
 
+
 // assets
 
 // colors
@@ -21,9 +22,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "8px",
     textDecoration: "none",
     color: theme.palette.text.primary,
-    // height: "100px",
-    // width: "100px",
     boxSizing: "border-box",
+    [theme.breakpoints.down("sm")]: {
+      padding: "8px",
+    },
   },
   catImg: {
     height: "80px",
@@ -41,10 +43,7 @@ const CategoryCard = ({ category }) => {
 
   return (
     <div className={globalCls.hovActive}>
-      <Link
-        to={`/jobs?category=${category.slug}&catId=${category._id}`}
-        className={clsx("fccc", cls.root)}
-      >
+      <Link to={`/${category.slug}`} className={clsx("fccc", cls.root)}>
         <img className={cls.catImg} src={category.categoryImage} alt="" />
         <div className={clsx("mar_t-8", "ellipsis", "fwb", globalCls.txtSmSec)}>
           {category.categoryName || "Unavailable"}

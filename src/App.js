@@ -1,6 +1,7 @@
-import './App.css';
+import "./App.css";
 import "./styles/styles.css";
 import "./styles/margins.css";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 // mui
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
@@ -10,7 +11,8 @@ import shadows from "./styles/shadows";
 import { useSelector } from "react-redux";
 
 // views
-import Home from "./views/home"
+import Home from "./views/home";
+import MyFeeds from "./views/myFeeds";
 
 function App() {
   const helper = useSelector((state) => state.helper);
@@ -22,7 +24,7 @@ function App() {
     warn: "#ee5700",
     teal: "#2accc888",
     hover: "rgba(0,0,0,0.1)",
-    link: "#ee5700"
+    link: "#ee5700",
   };
 
   if (helper.themeName === "light") {
@@ -95,11 +97,18 @@ function App() {
 
   return (
     <ThemeProvider theme={appTheme}>
-       <div className="App">
-          <Home />
-       </div>
+      <div className="App">
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/:categoryName">
+            <MyFeeds />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </div>
     </ThemeProvider>
-   
   );
 }
 

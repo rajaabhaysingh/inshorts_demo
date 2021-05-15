@@ -7,6 +7,7 @@ import useGlobalStyles from "../../styles/globalStyles";
 import { Link } from "react-router-dom";
 
 // components
+import Loader from "../loader";
 
 // assets
 
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     marginTop: "4px",
     height: "1px",
-    background: theme.palette.primary.main,
+    background: theme.palette.divider,
     width: "100%",
   },
   pad: { padding: "8px", boxSizing: "border-box" },
@@ -71,6 +72,9 @@ const HomeInsights = ({ insightsArray }) => {
     <div className={cls.root}>
       <div className={clsx(cls.pad, "fcol")}>
         <div className={clsx("txtC fwb", globalCls.txtLgSec)}>Insights</div>
+        <div className={clsx("txtC", globalCls.txtSmSec)}>
+          Thse insights are by inshorts.
+        </div>
         <div className={cls.divider}></div>
       </div>
       {insightsArray ? (
@@ -82,7 +86,7 @@ const HomeInsights = ({ insightsArray }) => {
           ))}
         </div>
       ) : (
-        <div></div>
+        <Loader />
       )}
     </div>
   );

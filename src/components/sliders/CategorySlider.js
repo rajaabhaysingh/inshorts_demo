@@ -15,6 +15,12 @@ import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
+  divider: {
+    marginTop: "4px",
+    height: "1px",
+    background: theme.palette.divider,
+    width: "100%",
+  },
 }));
 
 const CategorySlider = ({ catList }) => {
@@ -29,6 +35,7 @@ const CategorySlider = ({ catList }) => {
       <div className={clsx("txtC mar_t-", globalCls.txtSmSec)}>
         Select a category to read inshorts.
       </div>
+      <div className={cls.divider}></div>
       <div className={clsx("f mar_t-16 of_scr sb_hid")}>
         {catList?.length > 0 ? (
           catList.map((category, i) => (

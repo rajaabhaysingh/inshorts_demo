@@ -195,7 +195,7 @@ const Header = () => {
     },
     {
       title: "My Feeds",
-      link: "/my-feeds",
+      link: "/all",
       icon: <i className="fas fa-th mar_r-4"></i>,
     },
     {
