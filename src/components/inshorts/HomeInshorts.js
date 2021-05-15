@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { useHistory } from "react-router-dom";
 
 // styling
 import { makeStyles } from "@material-ui/core";
@@ -41,14 +42,18 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "scroll",
     margin: "0 8px 16px 2px",
     padding: "8px",
-    boxShadow: theme.shadows[8],
+    boxShadow: theme.shadows[4],
     boxSizing: "border-box",
     borderRadius: "8px",
+    cursor: "pointer",
     [theme.breakpoints.down("sm")]: {
       width: "80%",
       minWidth: "80%",
       margin: "0 2px 8px 2px",
       minHeight: "540px",
+    },
+    "&:hover": {
+      boxShadow: theme.shadows[8],
     },
   },
   imgWrapper: {
@@ -83,6 +88,8 @@ const HomeInsights = ({ inshortsArray }) => {
   const cls = useStyles();
   const globalCls = useGlobalStyles();
 
+  const history = useHistory();
+
   return (
     <div className={cls.root}>
       <div className={clsx(cls.pad, "fcol")}>
@@ -102,6 +109,7 @@ const HomeInsights = ({ inshortsArray }) => {
                 "sb_hid"
               )}
               key={i}
+              onClick={() => history.push("/all")}
             >
               <div className={cls.imgWrapper}>
                 <img className={cls.inshortImg} src={inshort.images} alt="" />

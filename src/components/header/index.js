@@ -46,6 +46,9 @@ import {
 import { themeAction, changeMargin } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
+// variables for popup
+let firstTime = true;
+
 const useStyles = makeStyles((theme) => ({
   searchVisible: {
     display: "flex",
@@ -176,7 +179,7 @@ const Header = () => {
   // local state management
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [locationOpen, setLocationOpen] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(firstTime);
   const [moreOptAnchorEl, setMoreOptAnchorEl] = useState(null);
   const [moreOptPcAnchorEl, setMoreOptPcAnchorEl] = useState(null);
   const [mobSearchVisible, setMobSearchVisible] = useState(
@@ -469,16 +472,33 @@ const Header = () => {
         {mobSearchVisible ? renderSearchBar() : null}
       </Hidden>
       <Modal
-        open={locationOpen}
-        onClose={() => setLocationOpen(false)}
+        open={firstTime}
+        onClose={() => {
+          firstTime = false;
+          setIsModelOpen(false);
+        }}
         className="fccc"
       >
         <div className={clsx(cls.modal, "sb_hid")}>
           <div className={globalCls.txtLgSec}>
-            <strong>Select your location</strong>
+            <strong>Feature instructions:</strong>
           </div>
-          <div className={clsx(globalCls.txtSmSec, "mar_t-4")}>
-            We need your location information to recommend job near me.
+          <div className={clsx(globalCls.txtSmSec, "mar_t-24")}>
+            The website has 3 sections:
+          </div>
+          <div className={clsx(globalCls.txtSmSec, "mar_t-8 mar_l-8")}>
+            <strong>- Home</strong>: Contains Inshorts app's "Discover" feature.
+          </div>
+          <div className={clsx(globalCls.txtSmSec, "mar_t-2 mar_l-8")}>
+            <strong>- My Feeds</strong>: Swipe-up news reading feature like
+            Inshorts app.
+          </div>
+          <div className={clsx(globalCls.txtSmSec, "mar_t-2 mar_l-8")}>
+            <strong>- Insights</strong>: The Inshorts carousel feature of
+            Inshorts app.
+          </div>
+          <div className={clsx(globalCls.txtSmSec, "mar_t-8")}>
+            For better experience, view this website in a mobile device.
           </div>
           <div className="fcol">
             <Button
@@ -486,9 +506,12 @@ const Header = () => {
               variant="contained"
               color="primary"
               type="button"
-              onClick={() => setLocationOpen(false)}
+              onClick={() => {
+                firstTime = false;
+                setIsModelOpen(false);
+              }}
             >
-              Done
+              Okay, Let me explore!
             </Button>
           </div>
         </div>

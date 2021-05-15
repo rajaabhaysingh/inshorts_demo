@@ -1,6 +1,7 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import clsx from "clsx";
+import ReactCardFlip from "react-card-flip";
 
 // components
 import Header from "../../components/header";
@@ -106,10 +107,12 @@ const useStyles = makeStyles((theme) => ({
 const MyFeeds = ({ helper }) => {
   // local state management
   const [activeIndex, setActiveIndex] = React.useState(0);
+  const [isFlipped, setIsFlipped] = React.useState(false);
 
   const cls = useStyles();
   const globalCls = useGlobalStyles();
   const { categoryName } = useParams();
+  const history = useHistory();
   const inshorts = useSelector((state) => state.inshorts);
   const dispatch = useDispatch();
 
@@ -122,8 +125,10 @@ const MyFeeds = ({ helper }) => {
 
   // increseActiveIndex
   const increseActiveIndex = () => {
-    if (activeIndex === 24) {
-      return;
+    setIsFlipped(!isFlipped);
+
+    if (activeIndex === 23) {
+      setActiveIndex(0);
     } else {
       setActiveIndex(activeIndex + 1);
     }
@@ -131,8 +136,10 @@ const MyFeeds = ({ helper }) => {
 
   // decreaseActiveIndex
   const decreaseActiveIndex = () => {
+    setIsFlipped(!isFlipped);
+
     if (activeIndex === 0) {
-      return;
+      setActiveIndex(23);
     } else {
       setActiveIndex(activeIndex - 1);
     }
@@ -140,10 +147,12 @@ const MyFeeds = ({ helper }) => {
 
   // ==================
   // Adding swipe functionality
+  let startingY = null;
   let startingX = null;
 
   // fun handleTouchStart
   const handleTouchStart = (e) => {
+    startingY = e.touches[0].clientY;
     startingX = e.touches[0].clientX;
   };
 
@@ -152,12 +161,26 @@ const MyFeeds = ({ helper }) => {
 
   // fun handleTouchEnd
   const handleTouchEnd = (e) => {
-    var change = startingX - e.changedTouches[0].clientX;
+    var changeY = startingY - e.changedTouches[0].clientY;
+    var changeX = startingX - e.changedTouches[0].clientX;
 
-    if (change > 0) {
-      decreaseActiveIndex();
+    // if swipe is left-right
+    if (Math.abs(changeX) > Math.abs(changeY)) {
+      if (changeX < 0) {
+        //  user swiped left
+        history.push("/");
+      } else {
+        //  user has swiped right
+      }
     } else {
-      increseActiveIndex();
+      // if swipe is significant
+      if (Math.abs(changeY) > 10) {
+        if (changeY > 0) {
+          increseActiveIndex();
+        } else {
+          decreaseActiveIndex();
+        }
+      }
     }
   };
   // ====== swipe functionality ends =======
@@ -166,7 +189,7 @@ const MyFeeds = ({ helper }) => {
     <div className={cls.root}>
       <Header helper={helper} />
       <div style={{ overflow: "hidden" }} className={globalCls.bodyRoot}>
-        {inshorts.inshortsData?.data ? (
+        {inshorts.inshortsData?.data?.length > 0 ? (
           <div
             className={clsx(globalCls.pcMarT8, "fcol")}
             onTouchStart={handleTouchStart}
@@ -181,88 +204,190 @@ const MyFeeds = ({ helper }) => {
                 <i className="fas fa-chevron-up mar_b-2"></i>
               </button>
             </Hidden>
-            <div className={clsx(globalCls.pclr_mobtb, cls.inshortCardWrapper)}>
-              <div className={cls.imgWrapper}>
-                <img
-                  className={cls.inshortImg}
-                  src={inshorts.inshortsData.data[activeIndex].images}
-                  alt=""
-                />
-              </div>
-              <div
-                className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
-              >
-                <div className={clsx("fwb", globalCls.txtLgSec)}>
-                  {inshorts.inshortsData.data[activeIndex].title}
-                </div>
-                <div className="fc mar_t-4">
-                  <div className={clsx("", globalCls.txtSmPriCol)}>
-                    - {inshorts.inshortsData.data[activeIndex].author}
-                  </div>
-                  <div className={clsx("mar_l-4", globalCls.txtSmSec)}>
-                    {inshorts.inshortsData.data[activeIndex].time}
-                  </div>
-                </div>
-                <div className={clsx("mar_t-16", globalCls.txtMdSec)}>
-                  {inshorts.inshortsData.data[activeIndex].decription}
-                </div>
-                <div className={cls.linkWrapper}>
-                  <a
-                    href={inshorts.inshortsData.data[activeIndex]["read-more"]}
-                    className={clsx("mar_t-16", cls.link)}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Read more
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div
-              className={clsx(
-                globalCls.pclr_mobtb,
-                cls.inshortCardWrapper,
-                "sb_hid"
-              )}
+            <ReactCardFlip
+              isFlipped={isFlipped}
+              flipDirection="vertical"
+              infinite={true}
             >
-              <div className={cls.imgWrapper}>
-                <img
-                  className={cls.inshortImg}
-                  src={inshorts.inshortsData.data[activeIndex + 1].images}
-                  alt=""
-                />
+              <div
+                className={clsx(globalCls.pclr_mobtb, cls.inshortCardWrapper)}
+              >
+                <div className={cls.imgWrapper}>
+                  <img
+                    className={cls.inshortImg}
+                    src={inshorts.inshortsData.data[activeIndex].images}
+                    alt=""
+                  />
+                </div>
+                <div
+                  className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
+                >
+                  <div className={clsx("fwb", globalCls.txtLgSec)}>
+                    {inshorts.inshortsData.data[activeIndex].title}
+                  </div>
+                  <div className="fc mar_t-4">
+                    <div className={clsx("", globalCls.txtSmPriCol)}>
+                      - {inshorts.inshortsData.data[activeIndex].author}
+                    </div>
+                    <div className={clsx("mar_l-4", globalCls.txtSmSec)}>
+                      {inshorts.inshortsData.data[activeIndex].time}
+                    </div>
+                  </div>
+                  <div className={clsx("mar_t-16", globalCls.txtMdSec)}>
+                    {inshorts.inshortsData.data[activeIndex].decription}
+                  </div>
+                  <div className={cls.linkWrapper}>
+                    <a
+                      href={
+                        inshorts.inshortsData.data[activeIndex]["read-more"]
+                      }
+                      className={clsx("mar_t-16", cls.link)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Read more
+                    </a>
+                  </div>
+                </div>
               </div>
               <div
-                className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
+                className={clsx(
+                  globalCls.pclr_mobtb,
+                  cls.inshortCardWrapper,
+                  "sb_hid"
+                )}
               >
-                <div className={clsx("fwb", globalCls.txtLgSec)}>
-                  {inshorts.inshortsData.data[activeIndex + 1].title}
+                <div className={cls.imgWrapper}>
+                  <img
+                    className={cls.inshortImg}
+                    src={inshorts.inshortsData.data[activeIndex].images}
+                    alt=""
+                  />
                 </div>
-                <div className="fc mar_t-4">
-                  <div className={clsx("", globalCls.txtSmPriCol)}>
-                    - {inshorts.inshortsData.data[activeIndex + 1].author}
+                <div
+                  className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
+                >
+                  <div className={clsx("fwb", globalCls.txtLgSec)}>
+                    {inshorts.inshortsData.data[activeIndex].title}
                   </div>
-                  <div className={clsx("mar_l-4", globalCls.txtSmSec)}>
-                    {inshorts.inshortsData.data[activeIndex + 1].time}
+                  <div className="fc mar_t-4">
+                    <div className={clsx("", globalCls.txtSmPriCol)}>
+                      - {inshorts.inshortsData.data[activeIndex].author}
+                    </div>
+                    <div className={clsx("mar_l-4", globalCls.txtSmSec)}>
+                      {inshorts.inshortsData.data[activeIndex].time}
+                    </div>
                   </div>
-                </div>
-                <div className={clsx("mar_t-16", globalCls.txtMdSec)}>
-                  {inshorts.inshortsData.data[activeIndex + 1].decription}
-                </div>
-                <div className={cls.linkWrapper}>
-                  <a
-                    href={
-                      inshorts.inshortsData.data[activeIndex + 1]["read-more"]
-                    }
-                    className={clsx("mar_t-16", cls.link)}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Read more
-                  </a>
+                  <div className={clsx("mar_t-16", globalCls.txtMdSec)}>
+                    {inshorts.inshortsData.data[activeIndex].decription}
+                  </div>
+                  <div className={cls.linkWrapper}>
+                    <a
+                      href={
+                        inshorts.inshortsData.data[activeIndex]["read-more"]
+                      }
+                      className={clsx("mar_t-16", cls.link)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Read more
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ReactCardFlip>
+            <ReactCardFlip
+              isFlipped={isFlipped}
+              flipDirection="vertical"
+              infinite={true}
+            >
+              <div
+                className={clsx(globalCls.pclr_mobtb, cls.inshortCardWrapper)}
+              >
+                <div className={cls.imgWrapper}>
+                  <img
+                    className={cls.inshortImg}
+                    src={inshorts.inshortsData.data[activeIndex + 1].images}
+                    alt=""
+                  />
+                </div>
+                <div
+                  className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
+                >
+                  <div className={clsx("fwb", globalCls.txtLgSec)}>
+                    {inshorts.inshortsData.data[activeIndex + 1].title}
+                  </div>
+                  <div className="fc mar_t-4">
+                    <div className={clsx("", globalCls.txtSmPriCol)}>
+                      - {inshorts.inshortsData.data[activeIndex + 1].author}
+                    </div>
+                    <div className={clsx("mar_l-4", globalCls.txtSmSec)}>
+                      {inshorts.inshortsData.data[activeIndex + 1].time}
+                    </div>
+                  </div>
+                  <div className={clsx("mar_t-16", globalCls.txtMdSec)}>
+                    {inshorts.inshortsData.data[activeIndex + 1].decription}
+                  </div>
+                  <div className={cls.linkWrapper}>
+                    <a
+                      href={
+                        inshorts.inshortsData.data[activeIndex + 1]["read-more"]
+                      }
+                      className={clsx("mar_t-16", cls.link)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Read more
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={clsx(
+                  globalCls.pclr_mobtb,
+                  cls.inshortCardWrapper,
+                  "sb_hid"
+                )}
+              >
+                <div className={cls.imgWrapper}>
+                  <img
+                    className={cls.inshortImg}
+                    src={inshorts.inshortsData.data[activeIndex + 1].images}
+                    alt=""
+                  />
+                </div>
+                <div
+                  className={clsx(globalCls.pcMarL_mobMarT16, "fcol mar_t-16")}
+                >
+                  <div className={clsx("fwb", globalCls.txtLgSec)}>
+                    {inshorts.inshortsData.data[activeIndex + 1].title}
+                  </div>
+                  <div className="fc mar_t-4">
+                    <div className={clsx("", globalCls.txtSmPriCol)}>
+                      - {inshorts.inshortsData.data[activeIndex + 1].author}
+                    </div>
+                    <div className={clsx("mar_l-4", globalCls.txtSmSec)}>
+                      {inshorts.inshortsData.data[activeIndex + 1].time}
+                    </div>
+                  </div>
+                  <div className={clsx("mar_t-16", globalCls.txtMdSec)}>
+                    {inshorts.inshortsData.data[activeIndex + 1].decription}
+                  </div>
+                  <div className={cls.linkWrapper}>
+                    <a
+                      href={
+                        inshorts.inshortsData.data[activeIndex + 1]["read-more"]
+                      }
+                      className={clsx("mar_t-16", cls.link)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Read more
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </ReactCardFlip>
             <Hidden smDown>
               <button className={cls.arrowBtn} onClick={increseActiveIndex}>
                 <i className="fas fa-chevron-down mar_t-4"></i>

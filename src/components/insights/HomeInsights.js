@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { useHistory } from "react-router-dom";
 
 // styling
 import { makeStyles } from "@material-ui/core";
@@ -45,10 +46,15 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[4],
     boxSizing: "border-box",
     borderRadius: "8px",
+    cursor: "pointer",
     [theme.breakpoints.down("sm")]: {
       width: "175px",
       minWidth: "175px",
       height: "280px",
+    },
+    "&:hover": {
+      transform: "scale(1.02)",
+      transition: "all ease-in 0.15s",
     },
   },
   insightsBanner: {
@@ -68,6 +74,8 @@ const HomeInsights = ({ insightsArray }) => {
   const cls = useStyles();
   const globalCls = useGlobalStyles();
 
+  const history = useHistory();
+
   return (
     <div className={cls.root}>
       <div className={clsx(cls.pad, "fcol")}>
@@ -80,7 +88,11 @@ const HomeInsights = ({ insightsArray }) => {
       {insightsArray ? (
         <div className={clsx(cls.insightsSlider, "sb_hid")}>
           {insightsArray.map((banner, i) => (
-            <div className={cls.insightsBannerWrapper} key={i}>
+            <div
+              className={cls.insightsBannerWrapper}
+              key={i}
+              onClick={() => history.push("/insights")}
+            >
               <img className={cls.insightsBanner} src={banner} alt="" />
             </div>
           ))}

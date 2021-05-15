@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 // views
 import Home from "./views/home";
 import MyFeeds from "./views/myFeeds";
+import Insights from "./views/insights";
 
 function App() {
   const helper = useSelector((state) => state.helper);
@@ -101,6 +102,9 @@ function App() {
         <Switch>
           <Route path="/" exact>
             <Home />
+          </Route>
+          <Route path="/insights">
+            <Insights />
           </Route>
           <Route path="/:categoryName">
             <MyFeeds />
