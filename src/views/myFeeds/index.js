@@ -185,6 +185,7 @@ const MyFeeds = ({ helper }) => {
         history.push("/");
       } else {
         //  user has swiped right
+        history.push(inshorts?.inshortsData?.data[activeIndex]["read-more"]);
       }
     } else {
       // if swipe is significant
